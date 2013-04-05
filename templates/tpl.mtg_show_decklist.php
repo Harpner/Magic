@@ -4,7 +4,7 @@
 		<p><?php echo $ar['decklist_description'];?></p>
 		<?php 
 		if ($_SESSION['loginid'] == $ar['decklist_admin_id']){?>
-			<a href="index.php?action=decklists_add_cards&lang=<?php echo $_GET['lang']; ?>&did=<?php echo $ar['decklist_id']; ?>">Editovat decklist</a>
+			<a href="index.php?action=decklist_edit&lang=<?php echo $_GET['lang']; ?>&did=<?php echo $ar['decklist_id']; ?>">Editovat decklist</a>
 			<div class="clear"></div>
 <?php
 		}

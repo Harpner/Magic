@@ -290,7 +290,7 @@ echo "	<div id=\"submenu_4\" class=\"menu_submenu\">\n";
 echo "	</div>\n";
 echo "	<div id=\"submenu_5\" class=\"menu_submenu\">\n";
 echo "		<a href=\"".$eden_cfg['url']."index.php?action=decklists\" target=\"_self\" title=\"Zobrazit decklisty\">Zobrazit decklisty</a>&nbsp;&nbsp;|&nbsp;&nbsp;\n";
-echo "		<a href=\"".$eden_cfg['url']."index.php?action=decklists_add\" target=\"_self\" title=\"Přidat decklist\">Přidat decklist</a>\n";
+echo "		<a href=\"".$eden_cfg['url']."index.php?action=decklist_add\" target=\"_self\" title=\"Přidat decklist\">Přidat decklist</a>\n";
 	if ($_SESSION['loginid'] != ""){
 		echo "		&nbsp;&nbsp;|&nbsp;&nbsp;<a href=\"".$eden_cfg['url']."index.php?action=decklists_my\" target=\"_self\" title=\"Mé decklisty\">Mé decklisty</a>\n";
 	}
@@ -568,9 +568,10 @@ if ($_GET['action'] == "article" || $_GET['action'] == "msg"){
 	$_GET['action'] == "fun_cards_instr" || 
 	$_GET['action'] == "decklist_show" || 
 	$_GET['action'] == "decklists" || 
-	$_GET['action'] == "decklists_add" || 
-	$_GET['action'] == "decklists_add_cards" || 
+	$_GET['action'] == "decklist_add" || 
+	$_GET['action'] == "decklist_edit" || 
 	$_GET['action'] == "decklists_my" || 
+	$_GET['action'] == "decklists_his" || 
 	$_GET['action'] == "players_profiles" || 
 	$_GET['action'] == "curiosity" || 
 	$_GET['action'] == "online_magic" || 
@@ -636,14 +637,17 @@ if ($_GET['action'] == "article" || $_GET['action'] == "msg"){
 			case "decklists":
 				$temp_title = "Decklisty";
 			break;
-			case "decklists_add":
+			case "decklist_add":
 				$temp_title = "Decklisty - Založit decklist";
 			break;
-			case "decklists_add_cards":
-				$temp_title = "Decklisty - Přidat karty";
+			case "decklist_edit":
+				$temp_title = "Decklisty - Editace decklistu";
 			break;
 			case "decklists_my":
 				$temp_title = "Decklisty - Mé decklisty";
+			break;
+			case "decklists_his":
+				$temp_title = "Decklisty - Decklisty uživatele ".GetNickName($_GET['aid'],1);
 			break;
 			case "playrooms_clubs":
 				$temp_title = "Herny a Kluby";
@@ -700,7 +704,7 @@ if ($_GET['action'] == "article" || $_GET['action'] == "msg"){
 			case "fun_cards_comp":
 				ZobrazeniNov(3,15);
 			break;
-			case "fun_cards_inst":
+			case "fun_cards_instr":
 				ZobrazeniNov(3,16);
 			break;
 			case "decklist_show":
@@ -711,21 +715,29 @@ if ($_GET['action'] == "article" || $_GET['action'] == "msg"){
 				$decklist = new MtGDecklists($eden_cfg);
 				echo $decklist->showDecklists();
 			break;
-			case "decklists_add":
+			case "decklist_add":?>
+				<div class="content_article_home_cont">
+					<div class="content_article_home_text" id="add_decklist_cards"><?php
 				if ($_SESSION['loginid'] != ""){
 			   		$decklist = new MtGDecklists($eden_cfg);
 					echo $decklist->formAddDecklist();
 				} else {
 					echo $denied;
-				}
+				}?>
+					</div>
+				</div><?php
 			break;
-			case "decklists_add_cards":
+			case "decklist_edit":?>
+				<div class="content_article_home_cont">
+					<div class="content_article_home_text" id="add_decklist_cards"><?php
 				if ($_SESSION['loginid'] != ""){
 					$decklist = new MtGDecklists($eden_cfg);
-					echo $decklist->formAddDecklistCards($_GET['did']);
+					echo $decklist->formEditDecklist($_GET['did']);
 				} else {
 					echo $denied;
-				}
+				}?>
+					</div>
+				</div><?php
 			break;
 			case "decklists_my":
 				if ($_SESSION['loginid'] != ""){
@@ -733,6 +745,14 @@ if ($_GET['action'] == "article" || $_GET['action'] == "msg"){
 					echo $decklist->showMyDecklists();
 				} else {
 					echo $denied;
+				}
+			break;
+			case "decklists_his":
+				$decklist = new MtGDecklists($eden_cfg);
+				if ($_SESSION['loginid'] == $_GET['aid']){
+					echo $decklist->showMyDecklists();
+				} else {
+					echo $decklist->showHisDecklists($_GET['aid']);
 				}
 			break;
 			case "playrooms_clubs":

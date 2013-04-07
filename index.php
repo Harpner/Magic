@@ -222,7 +222,7 @@ echo "	<div id=\"menu_custom_right\">";
 	if ($_SESSION['u_status'] != "vizitor" && $_SESSION['nick'] != ""){
 		echo "<a href=\"index.php?action=player&amp;mode=player_acc&amp;id=".$_SESSION['loginid']."&amp;lang=".$_GET['lang']."\">".stripslashes($ar_admin['admin_nick'])."</a>";
 		if (($_SESSION['u_status'] == "user" || $_SESSION['u_status'] == "admin") && $ar_pm_log['forum_pm_log_posts'] < $num_pm[0]){
-			echo "<a href=\"index.php?project=".$_SESSION['project']."&amp;action=forum&amp;faction=pm\"><img src=\"images/sys_message_new.gif\" alt=\""._PM."\" title=\""._PM."\" id=\"sgb\" width=\"15\" height=\"10\" border=\"0\" style=\"position:relative;top:2px;\"> ("; echo $num_pm[0] - $ar_pm_log['forum_pm_log_posts']; echo ")</a>";
+			echo "<a href=\"index.php?project=".$_SESSION['project']."&amp;action=forum&amp;faction=pm\"><img src=\"images/sys_message_new.gif\" alt=\""._PM."\" title=\""._PM."\" width=\"15\" height=\"10\" border=\"0\" style=\"position:relative;top:2px;\"> ("; echo $num_pm[0] - $ar_pm_log['forum_pm_log_posts']; echo ")</a>";
 		} else {
 			echo "<a href=\"index.php?project=".$_SESSION['project']."&amp;action=forum&amp;faction=pm\"><img src=\"images/sys_message.gif\" alt=\""._PM."\" title=\""._PM."\" width=\"15\" height=\"10\" border=\"0\" style=\"position:relative;top:2px;\"></a>";
 		}

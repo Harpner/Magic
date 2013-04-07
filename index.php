@@ -578,11 +578,15 @@ if ($_GET['action'] == "article" || $_GET['action'] == "msg"){
 	$_GET['action'] == "begining" ||
 	$_GET['action'] == "card_list" || 
 	$_GET['action'] == "browse_channel" || 
+	$_GET['action'] == "player" || 
 	$_GET['action'] == "playrooms_clubs" || 
 	$_GET['action'] == "clubs" || 
 	$_GET['action'] == "stream" || 
 	$_GET['action'] == "eshops"){
 		switch ($_GET['action']){
+			case "player":
+		   		$temp_title = "Hráčský účet";
+			break;
 			case "clanek":
 				$temp_title = _ARTICLE;
 			break;
@@ -671,6 +675,16 @@ if ($_GET['action'] == "article" || $_GET['action'] == "msg"){
 		echo "</div>";
 		$denied = "<div class=\"eden_league\">\nPro zobrazení této funkce musíte být přihlášeni.\n</div>\n";
 		switch ($_GET['action']){
+			case "player":
+				switch (AGet($_GET,'mode')){
+					/*******************************************************
+					*	PLAYER ACCOUNT
+					*******************************************************/
+					case "player_acc":
+					   LeaguePlayerAcc($_GET['id'],578,583);
+		   			break;
+				}
+   			break;
 			case "browse_channel":
 				ShowChannel($_GET['id'],1,0);
 			break;
